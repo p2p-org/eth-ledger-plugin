@@ -1,8 +1,7 @@
 // You will need to create a folder with this name, and put in the abis of your contracts in `abis/`.
 // You will also need to create a `b2c.json` file that will hold the methodIDs and location of
 // the erc20 tokens that should get displayed.
-// EDIT THIS: replace with the name of your plugin (lowercase)
-const pluginFolder = "boilerplate";
+const pluginFolder = "p2p-staking";
 
 function serialize_data(pluginName, contractAddress, selector) {
 	const len = Buffer.from([pluginName.length]);
@@ -22,12 +21,11 @@ function assert(condition, message) {
 
 // Function to generate the plugin configuration.
 function generate_plugin_config(network="ethereum") {
-	
-	var fs = require('fs');
-	var files = fs.readdirSync(`networks/${network}/${pluginFolder}/abis/`);
 
-	
-	// `contracts_to_abis` holds a maping of contract addresses to abis
+	const fs = require('fs');
+	const files = fs.readdirSync(`networks/${network}/${pluginFolder}/abis/`);
+
+	// `contracts_to_abis` holds a mapping of contract addresses to abis
 	let contracts_to_abis = {};
 	for (let abiFileName of files) {
 		assert(abiFileName.toLocaleLowerCase() == abiFileName, `FAILED: File ${abiFileName} should be lower case.`);
@@ -42,7 +40,6 @@ function generate_plugin_config(network="ethereum") {
 	
 	// Load the b2c.json file
 	const b2c = require(`../networks/${network}/${pluginFolder}/b2c.json`);
-
 	
 	let res = {};
 	
@@ -66,7 +63,6 @@ function generate_plugin_config(network="ethereum") {
 
 			const erc20OfInterest = values["erc20OfInterest"];
 			assert(erc20OfInterest.length <= 2, `Maximum of 2 erc20OfInterest allowed. Got ${erc20OfInterest.length}`);
-
 
 			// Put them in `methods_info`
 			methods_info[selector] = {"erc20OfInterest": values["erc20OfInterest"], "plugin": pluginName, "serialized_data": serializedData, "signature": signature};

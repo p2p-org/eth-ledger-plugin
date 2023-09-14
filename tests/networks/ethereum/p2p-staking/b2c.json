@@ -1,0 +1,19 @@
+{
+    "chainId": 1,
+    "contracts": [
+        {
+            "address": "0x2E0743aAAB3118945564b715598B7DF10e083dC1",
+            "contractName": "p2p-staking",
+            "selectors": {
+                "0x2c4b04fa": {
+                    "erc20OfInterest": [
+                        "path.1"
+                    ],
+                    "method": "deposit",
+                    "plugin": "p2p-staking"
+		        }
+	        }
+	    }
+    ],
+    "name": "p2p-staking"
+}
