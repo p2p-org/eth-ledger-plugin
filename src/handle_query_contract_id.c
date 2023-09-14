@@ -1,4 +1,4 @@
-#include "boilerplate_plugin.h"
+#include "p2p_staking.h"
 
 // Sets the first screen to display.
 void handle_query_contract_id(void *parameters) {
@@ -10,12 +10,19 @@ void handle_query_contract_id(void *parameters) {
     // For the first screen, display the plugin name.
     strlcpy(msg->name, PLUGIN_NAME, msg->nameLength);
 
-    // EDIT THIS: Adapt the cases by modifying the strings you pass to `strlcpy`.
-    if (context->selectorIndex == SWAP_EXACT_ETH_FOR_TOKENS) {
-        strlcpy(msg->version, "Swap", msg->versionLength);
-        msg->result = ETH_PLUGIN_RESULT_OK;
-    } else {
-        PRINTF("Selector index: %d not supported\n", context->selectorIndex);
-        msg->result = ETH_PLUGIN_RESULT_ERROR;
+    switch (context->selectorIndex) {
+        case DO_DEPOSIT:
+            strlcpy(msg->version, "Stake", msg->versionLength);
+            break;
+        case DO_WITHDRAW_RESERVED_DO_NOT_USE:
+            strlcpy(msg->version, "Unstake", msg->versionLength);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;  // not supported
+            return;
+        default:
+            PRINTF("Selector index: %d not supported\n", context->selectorIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            return;
     }
+
+    msg->result = ETH_PLUGIN_RESULT_OK;
 }
