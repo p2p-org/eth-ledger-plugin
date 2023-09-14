@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "stopka"
+version = "0.1.0"
+description = ""
+authors = []
+license = "UNLICENSED"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.10.*"
+
+[tool.poetry.group.dev.dependencies]
+ledgerwallet = "0.3.0"
+ledgerblue = "^0.1.48"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
