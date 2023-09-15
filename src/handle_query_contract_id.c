@@ -7,22 +7,20 @@ void handle_query_contract_id(void *parameters) {
     // msg->name will be the upper sentence displayed on the screen.
     // msg->version will be the lower sentence displayed on the screen.
 
-    // For the first screen, display the plugin name.
-    strlcpy(msg->name, PLUGIN_NAME, msg->nameLength);
+    msg->result = ETH_PLUGIN_RESULT_OK;
 
+    // For the first screen, display the plugin name.
+    strlcpy(msg->name, "p2p.org", msg->nameLength);
     switch (context->selectorIndex) {
         case DO_DEPOSIT:
             strlcpy(msg->version, "Stake", msg->versionLength);
             break;
-        case DO_WITHDRAW_RESERVED_DO_NOT_USE:
+        case DO_WITHDRAW:
             strlcpy(msg->version, "Unstake", msg->versionLength);
-            msg->result = ETH_PLUGIN_RESULT_ERROR;  // not supported
-            return;
+            break;
         default:
             PRINTF("Selector index: %d not supported\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
-            return;
+            break;
     }
-
-    msg->result = ETH_PLUGIN_RESULT_OK;
 }

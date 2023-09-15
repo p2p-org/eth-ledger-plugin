@@ -44,10 +44,9 @@ void handle_init_contract(void *parameters) {
     // Set `next_param` to be the first field we expect to parse.
     switch (context->selectorIndex) {
         case DO_DEPOSIT:
-            context->next_param = AMOUNT;
             break;
-        case DO_WITHDRAW_RESERVED_DO_NOT_USE:
-            context->next_param = AMOUNT;
+        case DO_WITHDRAW:
+            context->next_param = ASSOCIATED_DATA;
             break;
         // Keep this
         default:

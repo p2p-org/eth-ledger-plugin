@@ -1,15 +1,46 @@
 #include "p2p_staking.h"
 
-// Set UI for the "Stake" screen.
-static void set_stake_ui(ethQueryContractUI_t *msg) {
+static void handle_deposit_ui_preview(ethQueryContractUI_t *msg, context_t *context) {
     strlcpy(msg->title, "Stake", msg->titleLength);
 
     const uint8_t *eth_amount = msg->pluginSharedRO->txContent->value.value;
     uint8_t eth_amount_size = msg->pluginSharedRO->txContent->value.length;
 
-    // Converts the uint256 number located in `eth_amount` to its string representation and
-    // copies this to `msg->msg`.
     amountToString(eth_amount, eth_amount_size, WEI_TO_ETHER, "ETH", msg->msg, msg->msgLength);
+}
+
+static void handle_deposit_ui(ethQueryContractUI_t *msg, context_t *context) {
+    msg->result = ETH_PLUGIN_RESULT_OK;
+    switch (msg->screenIndex) {
+        case 0:
+            handle_deposit_ui_preview(msg, context);
+            break;
+
+        default:
+            PRINTF("Received a screen index out of bounds: %d", msg->screenIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
+static void handle_withdraw_ui_preview(ethQueryContractUI_t *msg, context_t *context) {
+    strlcpy(msg->title, "Unstake", msg->titleLength);
+
+    strlcpy(msg->msg, "ETH", msg->msgLength);
+}
+
+static void handle_withdraw_ui(ethQueryContractUI_t *msg, context_t *context) {
+    msg->result = ETH_PLUGIN_RESULT_OK;
+    switch (msg->screenIndex) {
+        case 0:
+            handle_withdraw_ui_preview(msg, context);
+            break;
+
+        default:
+            PRINTF("Received a screen index out of bounds: %d", msg->screenIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
 }
 
 void handle_query_contract_ui(void *parameters) {
@@ -26,9 +57,12 @@ void handle_query_contract_ui(void *parameters) {
 
     msg->result = ETH_PLUGIN_RESULT_OK;
 
-    switch (msg->screenIndex) {
-        case 0:
-            set_stake_ui(msg);
+    switch (context->selectorIndex) {
+        case DO_DEPOSIT:
+            handle_deposit_ui(msg, context);
+            break;
+        case DO_WITHDRAW:
+            handle_withdraw_ui(msg, context);
             break;
         // Keep this
         default:

@@ -1,19 +1,26 @@
 {
-    "chainId": 1,
-    "contracts": [
-        {
-            "address": "0x2E0743aAAB3118945564b715598B7DF10e083dC1",
-            "contractName": "p2p-staking",
-            "selectors": {
-                "0x2c4b04fa": {
-                    "erc20OfInterest": [
-                        "path.1"
-                    ],
-                    "method": "deposit",
-                    "plugin": "p2p-staking"
-		        }
-	        }
-	    }
-    ],
-    "name": "p2p-staking"
+  "chainId": 1,
+  "contracts": [
+    {
+      "address": "0x8e76a33f1aff7eb15de832810506814af4789536",
+      "contractName": "p2p-staking",
+      "selectors": {
+        "0x2c4b04fa": {
+          "method": "deposit",
+          "plugin": "p2p-staking"
+        }
+      }
+    },
+    {
+      "address": "0x4e1224f513048e18e7a1883985b45dc0fe1d917e",
+      "contractName": "p2p-staking",
+      "selectors": {
+        "0x66792ba1": {
+          "method": "send",
+          "plugin": "p2p-staking"
+        }
+      }
+    }
+  ],
+  "name": "p2p-staking"
 }

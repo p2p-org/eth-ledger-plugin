@@ -14,12 +14,12 @@
 // Should follow the exact same order as the array declared in main.c
 typedef enum {
     DO_DEPOSIT = 0,
-    DO_WITHDRAW_RESERVED_DO_NOT_USE,
+    DO_WITHDRAW,
 } selector_t;
 
 // Enumeration used to parse the smart contract data.
 typedef enum {
-    AMOUNT = 0,
+    ASSOCIATED_DATA = 0,
 
     UNEXPECTED_PARAMETER = -1,
 } parameter;

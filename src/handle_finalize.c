@@ -6,7 +6,19 @@ void handle_finalize(void *parameters) {
 
     msg->uiType = ETH_UI_TYPE_GENERIC;
 
-    msg->numScreens = 1;
-
     msg->result = ETH_PLUGIN_RESULT_OK;
+
+    switch (context->selectorIndex) {
+        case DO_DEPOSIT:
+            msg->numScreens = 1;
+            break;
+        case DO_WITHDRAW:
+            msg->numScreens = 0;
+            break;
+
+        default:
+            PRINTF("Selector index not supported: %d\n", context->selectorIndex);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            return;
+    }
 }

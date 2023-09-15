@@ -1,12 +1,21 @@
 #include "p2p_staking.h"
 
-static void handle_no_params(ethPluginProvideParameter_t *msg, context_t *context) {
+static void handle_deposit_params(ethPluginProvideParameter_t *msg, context_t *context) {
     switch (context->next_param) {
+        case 0:
+            // Skipping arguments not used for display.
+            break;
         default:
             PRINTF("Unexpected parameter: %d\n", context->next_param);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             break;
     }
+}
+
+static void handle_withdraw_params(ethPluginProvideParameter_t *msg, context_t *context) {
+    // The first chunk is the offset of the text data.
+    // The second chunk is the text data length.
+    // The rest is the text data, chunked.
 }
 
 void handle_provide_parameter(void *parameters) {
@@ -24,11 +33,10 @@ void handle_provide_parameter(void *parameters) {
 
     switch (context->selectorIndex) {
         case DO_DEPOSIT:
-            handle_no_params(msg, context);
+            handle_deposit_params(msg, context);
             break;
-        case DO_WITHDRAW_RESERVED_DO_NOT_USE:
-            PRINTF("Withdrawal is not supported with this plugin version\n");
-            msg->result = ETH_PLUGIN_RESULT_ERROR;
+        case DO_WITHDRAW:
+            handle_withdraw_params(msg, context);
             break;
         default:
             PRINTF("Selector Index not supported: %d\n", context->selectorIndex);
