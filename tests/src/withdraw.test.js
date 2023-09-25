@@ -31,11 +31,11 @@ MODELS.forEach((model) => {
       const serializedTx = txFromEtherscan(WITHDRAW_TX_DATA);
       const tx = eth.signTransaction("44'/60'/0'/0", serializedTx);
 
-      const rightClicks = 5;
+      const right_clicks = model.letter === 'S' ? 6 : 4;
 
       await waitForAppScreen(sim);
       await sim.navigateAndCompareSnapshots(".", `${model.name}_withdraw`, [
-        rightClicks,
+        right_clicks,
         0,
       ]);
 
