@@ -4,14 +4,11 @@ import { ledgerService } from "@ledgerhq/hw-app-eth";
 import {
   waitForAppScreen,
   zemu,
-  genericTx,
   txFromEtherscan,
   MODELS,
-  SPECULOS_ADDRESS,
   WITHDRAW_TX_DATA,
 } from "./test.fixture";
 import { ethers } from "ethers";
-import { parseEther, parseUnits } from "ethers/lib/utils";
 
 const contractAddr = "0x4e1224f513048e18e7a1883985b45dc0fe1d917e";
 const pluginName = "p2p-staking";
@@ -31,7 +28,7 @@ MODELS.forEach((model) => {
       const serializedTx = txFromEtherscan(WITHDRAW_TX_DATA);
       const tx = eth.signTransaction("44'/60'/0'/0", serializedTx);
 
-      const rightClicks = 5;
+      const rightClicks = 4;
 
       await waitForAppScreen(sim);
       await sim.navigateAndCompareSnapshots(".", `${model.name}_withdraw`, [
