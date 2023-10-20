@@ -25,6 +25,7 @@ static void handle_deposit_ui(ethQueryContractUI_t *msg, context_t *context) {
 }
 
 static void handle_withdraw_ui_preview(ethQueryContractUI_t *msg, context_t *context) {
+    (void) context;
     strlcpy(msg->title, "Unstake", msg->titleLength);
 
     strlcpy(msg->msg, "ETH", msg->msgLength);
