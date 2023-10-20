@@ -1,6 +1,7 @@
 #include "p2p_staking.h"
 
 static void handle_deposit_ui_preview(ethQueryContractUI_t *msg, context_t *context) {
+    (void) context;
     strlcpy(msg->title, "Stake", msg->titleLength);
 
     const uint8_t *eth_amount = msg->pluginSharedRO->txContent->value.value;
@@ -46,7 +47,6 @@ static void handle_withdraw_ui(ethQueryContractUI_t *msg, context_t *context) {
 void handle_query_contract_ui(void *parameters) {
     ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
     context_t *context = (context_t *) msg->pluginContext;
-    (void) context;
 
     // msg->title is the upper line displayed on the device.
     // msg->msg is the lower line displayed on the device.

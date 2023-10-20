@@ -12,12 +12,6 @@ static void handle_deposit_params(ethPluginProvideParameter_t *msg, context_t *c
     }
 }
 
-static void handle_withdraw_params(ethPluginProvideParameter_t *msg, context_t *context) {
-    // The first chunk is the offset of the text data.
-    // The second chunk is the text data length.
-    // The rest is the text data, chunked.
-}
-
 void handle_provide_parameter(void *parameters) {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
     context_t *context = (context_t *) msg->pluginContext;
@@ -36,7 +30,6 @@ void handle_provide_parameter(void *parameters) {
             handle_deposit_params(msg, context);
             break;
         case DO_WITHDRAW:
-            handle_withdraw_params(msg, context);
             break;
         default:
             PRINTF("Selector Index not supported: %d\n", context->selectorIndex);
