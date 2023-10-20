@@ -28,7 +28,7 @@ MODELS.forEach((model) => {
       const serializedTx = txFromEtherscan(DEPOSIT_TX_DATA);
       const tx = eth.signTransaction("44'/60'/0'/0", serializedTx);
 
-      const rightClicks = 4;
+      const rightClicks = model.letter === 'S' ? 6 : 4;
 
       await waitForAppScreen(sim);
       await sim.navigateAndCompareSnapshots(".", `${model.name}_deposit`, [
