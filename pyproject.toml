@@ -10,7 +10,7 @@ readme = "README.md"
 python = "3.10.*"
 
 [tool.poetry.group.dev.dependencies]
-ledgerwallet = "0.3.0"
+ledgerwallet = "0.10.0"
 ledgerblue = "^0.1.48"
 
 [build-system]
